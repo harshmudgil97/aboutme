@@ -1,0 +1,390 @@
+/* Wayground Tender Monitor Dashboard Styles */
+
+:root {
+    --primary-color: #0066cc;
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+    --info-color: #17a2b8;
+    --secondary-color: #6c757d;
+    --light-color: #f8f9fa;
+    --dark-color: #343a40;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f6fa;
+    color: #2c3e50;
+}
+
+/* Navigation */
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+.navbar-brand i {
+    color: #ffc107;
+}
+
+/* Tab Content */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid #e9ecef;
+    border-radius: 10px 10px 0 0 !important;
+    font-weight: 600;
+}
+
+/* KPI Cards */
+.card.bg-primary {
+    background: linear-gradient(135deg, var(--primary-color), #004499) !important;
+}
+
+.card.bg-success {
+    background: linear-gradient(135deg, var(--success-color), #1e7e34) !important;
+}
+
+.card.bg-warning {
+    background: linear-gradient(135deg, var(--warning-color), #e0a800) !important;
+}
+
+.card.bg-info {
+    background: linear-gradient(135deg, var(--info-color), #138496) !important;
+}
+
+/* Opportunity Items */
+.opportunity-item {
+    transition: all 0.2s ease;
+    border: 1px solid #e9ecef !important;
+}
+
+.opportunity-item:hover {
+    background-color: #f8f9fa;
+    border-color: var(--primary-color) !important;
+}
+
+/* Urgent Tender Items */
+.urgent-tender-item {
+    transition: all 0.2s ease;
+}
+
+.urgent-tender-item:hover {
+    background-color: #fff !important;
+}
+
+/* Badges */
+.badge {
+    font-weight: 500;
+    padding: 0.5em 0.75em;
+}
+
+/* Tables */
+.table {
+    background-color: #fff;
+}
+
+.table th {
+    border-top: none;
+    font-weight: 600;
+    color: var(--dark-color);
+    background-color: #f8f9fa;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.tender-title {
+    font-weight: 500;
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+.tender-title:hover {
+    text-decoration: underline;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Filters */
+.form-select, .form-control {
+    border-radius: 6px;
+    border: 1px solid #dee2e6;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-select:focus, .form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(0, 102, 204, 0.25);
+}
+
+/* Analysis Sections */
+.keyword-stat {
+    padding: 0.75rem;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+}
+
+.competition-stat {
+    padding: 0.75rem;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+}
+
+.metric-card {
+    background-color: #fff;
+    transition: transform 0.2s ease;
+}
+
+.metric-card:hover {
+    transform: translateY(-2px);
+}
+
+.metric-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.metric-label {
+    color: var(--secondary-color);
+    font-weight: 500;
+}
+
+.metric-value {
+    font-weight: 600;
+    color: var(--dark-color);
+}
+
+/* Alerts */
+.alert {
+    border: none;
+    border-radius: 8px;
+    border-left: 4px solid;
+}
+
+.alert-danger {
+    border-left-color: var(--danger-color);
+    background-color: rgba(220, 53, 69, 0.1);
+}
+
+.alert-warning {
+    border-left-color: var(--warning-color);
+    background-color: rgba(255, 193, 7, 0.1);
+}
+
+.alert-info {
+    border-left-color: var(--info-color);
+    background-color: rgba(23, 162, 184, 0.1);
+}
+
+.alert-success {
+    border-left-color: var(--success-color);
+    background-color: rgba(40, 167, 69, 0.1);
+}
+
+/* Modal */
+.modal-content {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+    border-bottom: 1px solid #e9ecef;
+    border-radius: 10px 10px 0 0;
+}
+
+.modal-footer {
+    border-top: 1px solid #e9ecef;
+    border-radius: 0 0 10px 10px;
+}
+
+/* Progress bars */
+.progress {
+    border-radius: 4px;
+    background-color: #e9ecef;
+}
+
+.progress-bar {
+    background-color: var(--primary-color);
+    border-radius: 4px;
+}
+
+/* Charts */
+canvas {
+    max-height: 300px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container-fluid {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .btn-group-sm .btn {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+    }
+    
+    .table-responsive {
+        font-size: 0.875rem;
+    }
+}
+
+/* Loading states */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Urgency indicators */
+.border-danger {
+    border-color: var(--danger-color) !important;
+}
+
+.border-warning {
+    border-color: var(--warning-color) !important;
+}
+
+.border-info {
+    border-color: var(--info-color) !important;
+}
+
+/* Flag icons fallback */
+.flag-icon {
+    width: 20px;
+    height: 15px;
+    background-color: #ddd;
+    border-radius: 2px;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+/* Score indicators */
+.bg-success {
+    background-color: var(--success-color) !important;
+}
+
+.bg-warning {
+    background-color: var(--warning-color) !important;
+}
+
+.bg-info {
+    background-color: var(--info-color) !important;
+}
+
+.bg-secondary {
+    background-color: var(--secondary-color) !important;
+}
+
+/* Tender status indicators */
+.badge.bg-primary {
+    background-color: var(--primary-color) !important;
+}
+
+.badge.bg-danger {
+    background-color: var(--danger-color) !important;
+}
+
+/* Animation for new items */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+/* Search highlighting */
+.highlight {
+    background-color: yellow;
+    padding: 2px 4px;
+    border-radius: 2px;
+}
+
+/* Status indicators */
+.status-new {
+    color: var(--primary-color);
+}
+
+.status-reviewed {
+    color: var(--info-color);
+}
+
+.status-applied {
+    color: var(--success-color);
+}
+
+.status-rejected {
+    color: var(--danger-color);
+}

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wayground Tender Monitor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/static/css/dashboard.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-search-dollar me-2"></i>
+                Wayground Tender Monitor
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tenders">Tenders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#analysis">Analysis</a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-outline-light btn-sm" onclick="triggerSearch()">
+                            <i class="fas fa-sync me-1"></i> Search Now
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container-fluid mt-4">
+        <!-- Alerts Section -->
+        <div id="alerts-container" class="mb-4"></div>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <!-- KPI Cards -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="card bg-primary text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h4 class="card-title" id="total-tenders">0</h4>
+                                    <p class="card-text">Total Tenders</p>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-file-contract fa-2x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-success text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h4 class="card-title" id="recommended-tenders">0</h4>
+                                    <p class="card-text">Recommended</p>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-thumbs-up fa-2x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-warning text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h4 class="card-title" id="urgent-opportunities">0</h4>
+                                    <p class="card-text">Urgent</p>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-clock fa-2x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-info text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h4 class="card-title" id="avg-ai-score">0.0</h4>
+                                    <p class="card-text">Avg AI Score</p>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-brain fa-2x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts and Tables Row -->
+            <div class="row">
+                <!-- Top Opportunities -->
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-star me-2"></i>Top Opportunities</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="top-opportunities-list">
+                                <div class="text-center text-muted">Loading...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Regional Distribution -->
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-globe me-2"></i>Regional Distribution</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="regional-chart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Urgent Tenders -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-exclamation-triangle me-2"></i>Urgent Tenders (Closing Soon)</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="urgent-tenders-list">
+                                <div class="text-center text-muted">Loading...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tenders Tab -->
+        <div id="tenders" class="tab-content">
+            <div class="row mb-3">
+                <div class="col-md-8">
+                    <h3>All Tenders</h3>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="tender-search" placeholder="Search tenders...">
+                        <button class="btn btn-outline-secondary" onclick="searchTenders()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="row mb-3">
+                <div class="col-md-2">
+                    <select class="form-select" id="status-filter">
+                        <option value="">All Status</option>
+                        <option value="new">New</option>
+                        <option value="reviewed">Reviewed</option>
+                        <option value="applied">Applied</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select class="form-select" id="region-filter">
+                        <option value="">All Regions</option>
+                        <option value="UK">UK</option>
+                        <option value="EU">EU</option>
+                        <option value="APAC">APAC</option>
+                        <option value="MEA">MEA</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select class="form-select" id="recommended-filter">
+                        <option value="">All Tenders</option>
+                        <option value="true">Recommended Only</option>
+                        <option value="false">Not Recommended</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <input type="number" class="form-control" id="min-score-filter" placeholder="Min AI Score" step="0.1" min="0" max="1">
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-primary" onclick="applyFilters()">Apply Filters</button>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-secondary" onclick="clearFilters()">Clear</button>
+                </div>
+            </div>
+
+            <!-- Tenders Table -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Organization</th>
+                                    <th>Country</th>
+                                    <th>Value</th>
+                                    <th>AI Score</th>
+                                    <th>Recommended</th>
+                                    <th>Closing Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tenders-table-body">
+                                <tr>
+                                    <td colspan="9" class="text-center text-muted">Loading tenders...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <nav>
+                        <ul class="pagination justify-content-center" id="pagination">
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analysis Tab -->
+        <div id="analysis" class="tab-content">
+            <h3>AI Analysis & Insights</h3>
+            
+            <!-- Analysis Cards -->
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6>Keyword Performance</h6>
+                        </div>
+                        <div class="card-body">
+                            <div id="keyword-analysis">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6>Competition Analysis</h6>
+                        </div>
+                        <div class="card-body">
+                            <div id="competition-analysis">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6>Success Probability</h6>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="success-chart" width="300" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Analysis -->
+            <div class="card">
+                <div class="card-header">
+                    <h5>Performance Metrics</h5>
+                </div>
+                <div class="card-body">
+                    <div id="performance-metrics">Loading...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tender Detail Modal -->
+    <div class="modal fade" id="tenderModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tenderModalTitle">Tender Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="tenderModalBody">
+                    <!-- Dynamic content -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="updateTenderStatus()">Update Status</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/static/js/dashboard.js"></script>
+</body>
+</html>
